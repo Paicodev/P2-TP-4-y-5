@@ -7,14 +7,31 @@ import java.util.ArrayList;
 
 public class EmpleadoDAO implements OperacionesDAO {
 
+    public ArrayList<Departamento> obtenerDepartamentos() {
+        ArrayList<Departamento> lista = new ArrayList<>();
+        String sql = "SELECT * FROM departamentos";
+        try (Connection conn = ConexionDB.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            
+            while (rs.next()) {
+                lista.add(new Departamento(rs.getInt("id_depto"), rs.getString("nombre_depto")));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener departamentos: " + e.getMessage());
+        }
+        return lista;
+    }
+
     @Override
     public void insertar(Empleado emp) {
-        String sql = "INSERT INTO empleados (nombre, departamento) VALUES (?, ?)";
+        String sql = "INSERT INTO empleados (nombre, id_depto, ruta_foto) VALUES (?, ?, ?)";
         try (Connection conn = ConexionDB.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, emp.getNombre());
-            pstmt.setString(2, emp.getDepartamento());
+            pstmt.setInt(2, emp.getIdDepto());
+            pstmt.setString(3, emp.getRutaFoto());
             pstmt.executeUpdate();
             System.out.println("Empleado insertado correctamente vía DAO.");
             
@@ -25,13 +42,13 @@ public class EmpleadoDAO implements OperacionesDAO {
 
     @Override
     public void modificar(Empleado emp) {
-        String sql = "UPDATE empleados SET nombre = ?, departamento = ? WHERE id = ?";
+        String sql = "UPDATE empleados SET nombre = ?, id_depto = ?, ruta_foto = ? WHERE id = ?";
         try (Connection conn = ConexionDB.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, emp.getNombre());
-            pstmt.setString(2, emp.getDepartamento());
-            pstmt.setInt(3, emp.getId());
+            pstmt.setInt(2, emp.getIdDepto());
+            pstmt.setString(3, emp.getRutaFoto());
             pstmt.executeUpdate();
             System.out.println("Empleado modificado correctamente vía DAO.");
             
@@ -68,7 +85,8 @@ public class EmpleadoDAO implements OperacionesDAO {
                 Empleado emp = new Empleado();
                 emp.setId(rs.getInt("id"));
                 emp.setNombre(rs.getString("nombre"));
-                emp.setDepartamento(rs.getString("departamento"));
+                emp.setIdDepto(rs.getInt("id_depto"));
+                emp.setRutaFoto(rs.getString("ruta_foto"));
                 listaEmpleados.add(emp);
             }
             

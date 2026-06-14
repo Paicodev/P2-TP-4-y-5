@@ -3,23 +3,19 @@ package src;
 public class Empleado {
     private int id;
     private String nombre;
-    private String departamento;
+    private int idDepto;
+    private String rutaFoto;
 
     // Constructor vacío
     public Empleado() {
     }
 
-    // Constructor para insertar (sin ID, ya que es autoincremental)
-    public Empleado(String nombre, String departamento) {
-        this.nombre = nombre;
-        this.departamento = departamento;
-    }
-
     // Constructor completo para leer o actualizar
-    public Empleado(int id, String nombre, String departamento) {
+    public Empleado(int id, String nombre, int idDepto, String rutaFoto) {
         this.id = id;
         this.nombre = nombre;
-        this.departamento = departamento;
+        this.idDepto = idDepto;
+        this.rutaFoto = rutaFoto;
     }
 
     // Getters y Setters
@@ -29,6 +25,8 @@ public class Empleado {
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getDepartamento() { return departamento; }
-    public void setDepartamento(String departamento) { this.departamento = departamento; }
+    public int getIdDepto() { return idDepto; }
+    public void setIdDepto(int idDepto) { this.idDepto = idDepto; }
+    public String getRutaFoto() { return rutaFoto; }
+    public void setRutaFoto(String rutaFoto) { this.rutaFoto = rutaFoto; }
 }
