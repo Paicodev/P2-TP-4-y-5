@@ -70,6 +70,6 @@ public class OperacionesDB {
         ops.actualizarDepartamento(1, "Finanzas"); 
         
         // 3. Ejecutar un DELETE 
-        ops.borrarEmpleado(1); // Descomenta esta línea para probar el borrado
+        //ops.borrarEmpleado(1); // Descomenta esta línea para probar el borrado
     }
 }
